@@ -1,16 +1,77 @@
-use crate::ceramic_client::ceramic_config::CeramicConfig;
 use crate::ceramic_client::http_requests::CeramicHTTPRequests;
 use async_trait::async_trait;
-use reqwest::RequestBuilder;
+use reqwest::{Client, RequestBuilder};
 
 pub struct CeramicHTTPClient {
-    pub config: CeramicConfig,
+    pub api_url: String,
+    pub api_version: String,
+    pub ceramic_network_url: String,
+    pub http_client: Client,
+    pub did: Option<String>,
 }
 
 impl CeramicHTTPClient {
-    pub fn new(config: Option<CeramicConfig>) -> CeramicHTTPClient {
+    pub fn new(
+        api_url: &str,
+        api_version: &str,
+        ceramic_network_url: &str,
+        http_client: Client,
+    ) -> Self {
         Self {
-            config: config.unwrap_or_default(),
+            api_url: String::from(api_url),
+            api_version: String::from(api_version),
+            ceramic_network_url: String::from(ceramic_network_url),
+            http_client,
+            did: None,
+        }
+    }
+
+    pub fn set_did(&mut self, did: &str) {
+        self.did = Some(String::from(did));
+    }
+
+    pub fn get_did(&self) -> Option<String> {
+        self.did.clone()
+    }
+
+    pub fn set_api_url(&mut self, api_url: &str) {
+        self.api_url = String::from(api_url);
+    }
+
+    pub fn get_api_url(&self) -> String {
+        self.api_url.clone()
+    }
+    pub fn set_api_version(&mut self, api_version: &str) {
+        self.api_version = String::from(api_version);
+    }
+    pub fn get_api_version(&self) -> String {
+        self.api_version.clone()
+    }
+    pub fn set_ceramic_network_url(&mut self, ceramic_network_url: &str) {
+        self.ceramic_network_url = String::from(ceramic_network_url);
+    }
+
+    pub fn get_ceramic_network_url(&self) -> String {
+        self.ceramic_network_url.clone()
+    }
+
+    pub fn set_http_client(&mut self, http_client: Client) {
+        self.http_client = http_client;
+    }
+    pub fn get_http_client(&self) -> Client {
+        self.http_client.clone()
+    }
+}
+
+impl Default for CeramicHTTPClient {
+    fn default() -> Self {
+        Self {
+            // config: Default::default(),
+            api_url: String::from("https://ceramic-clay.3boxlabs.com/api"),
+            api_version: String::from("/v0"),
+            ceramic_network_url: String::from("https://ceramic-clay.3boxlabs.com"),
+            http_client: Client::new(),
+            did: None,
         }
     }
 }
@@ -18,21 +79,16 @@ impl CeramicHTTPClient {
 #[async_trait]
 impl CeramicHTTPRequests for CeramicHTTPClient {
     async fn get_stream(&self, stream_id: &str) -> Result<String, Box<dyn std::error::Error>> {
-        let endpoint: String = format!(
-            "{}{}/streams/{}",
-            self.config.ceramic_url, self.config.api_version, stream_id
-        );
-        let req: RequestBuilder = self.config.client.get(endpoint);
+        let endpoint: String =
+            format!("{}{}/streams/{}", self.api_url, self.api_version, stream_id);
+        let req: RequestBuilder = self.http_client.get(endpoint);
         let res: String = req.send().await?.text().await?;
         return Result::Ok(res);
     }
 
     async fn get_supported_chains(&self) -> Result<String, Box<dyn std::error::Error>> {
-        let endpoint: String = format!(
-            "{}{}{}/node/chains",
-            self.config.ceramic_url, self.config.ceramic_url, self.config.api_version
-        );
-        let req: RequestBuilder = self.config.client.get(endpoint);
+        let endpoint: String = format!("{}{}/node/chains", self.api_url, self.api_version);
+        let req: RequestBuilder = self.http_client.get(endpoint);
         let res: String = req.send().await?.text().await?;
         return Result::Ok(res);
     }
@@ -41,31 +97,23 @@ impl CeramicHTTPRequests for CeramicHTTPClient {
         &self,
         stream_id: &str,
     ) -> Result<String, Box<dyn std::error::Error>> {
-        let endpoint: String = format!(
-            "{}{}/commits/{}",
-            self.config.ceramic_url, self.config.api_version, stream_id
-        );
-        let req: RequestBuilder = self.config.client.get(endpoint);
+        let endpoint: String =
+            format!("{}{}/commits/{}", self.api_url, self.api_version, stream_id);
+        let req: RequestBuilder = self.http_client.get(endpoint);
         let res: String = req.send().await?.text().await?;
         return Result::Ok(res);
     }
 
     async fn get_pin(&self, stream_id: &str) -> Result<String, Box<dyn std::error::Error>> {
-        let endpoint: String = format!(
-            "{}{}/pins/{}",
-            self.config.ceramic_url, self.config.api_version, stream_id
-        );
-        let req: RequestBuilder = self.config.client.get(endpoint);
+        let endpoint: String = format!("{}{}/pins/{}", self.api_url, self.api_version, stream_id);
+        let req: RequestBuilder = self.http_client.get(endpoint);
         let res: String = req.send().await?.text().await?;
         return Result::Ok(res);
     }
 
     async fn get_healthcheck(&self) -> Result<String, Box<dyn std::error::Error>> {
-        let endpoint: String = format!(
-            "{}{}/node/healthcheck",
-            self.config.ceramic_url, self.config.api_version
-        );
-        let req: RequestBuilder = self.config.client.get(endpoint);
+        let endpoint: String = format!("{}{}/node/healthcheck", self.api_url, self.api_version);
+        let req: RequestBuilder = self.http_client.get(endpoint);
         let res: String = req.send().await?.text().await?;
         return Result::Ok(res);
     }
