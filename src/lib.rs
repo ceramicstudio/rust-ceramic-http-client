@@ -27,7 +27,6 @@ mod tests {
             "https://ceramic-clay.3boxlabs.com/api",
             "v1",
             "https://ceramic-clay.3boxlabs.com",
-            Default::default(),
         );
         assert_eq!(
             ceramic.get_api_url(),

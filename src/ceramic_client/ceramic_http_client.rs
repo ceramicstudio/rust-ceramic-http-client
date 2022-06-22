@@ -11,18 +11,13 @@ pub struct CeramicHTTPClient {
 }
 
 impl CeramicHTTPClient {
-    pub fn new(
-        api_url: &str,
-        api_version: &str,
-        ceramic_network_url: &str,
-        http_client: Client,
-    ) -> Self {
+    pub fn new(api_url: &str, api_version: &str, ceramic_network_url: &str) -> Self {
         Self {
             api_url: String::from(api_url),
             // TODO: properly format the api_version by prepending a "/" if it doesn't exist
             api_version: String::from(api_version),
             ceramic_network_url: String::from(ceramic_network_url),
-            http_client,
+            http_client: Client::new(),
             did: None,
         }
     }
