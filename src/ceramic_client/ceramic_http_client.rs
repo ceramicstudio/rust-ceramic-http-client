@@ -3,11 +3,11 @@ use async_trait::async_trait;
 use reqwest::{Client, RequestBuilder};
 
 pub struct CeramicHTTPClient {
-    pub api_url: String,
-    pub api_version: String,
-    pub ceramic_network_url: String,
-    pub http_client: Client,
-    pub did: Option<String>,
+    api_url: String,
+    api_version: String,
+    ceramic_network_url: String,
+    http_client: Client,
+    did: Option<String>,
 }
 
 impl CeramicHTTPClient {
@@ -19,6 +19,7 @@ impl CeramicHTTPClient {
     ) -> Self {
         Self {
             api_url: String::from(api_url),
+            // TODO: properly format the api_version by prepending a "/" if it doesn't exist
             api_version: String::from(api_version),
             ceramic_network_url: String::from(ceramic_network_url),
             http_client,
