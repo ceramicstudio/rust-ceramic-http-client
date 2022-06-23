@@ -61,7 +61,7 @@ impl GenesisHeader {
     pub fn get_index(&self) -> HashMap<String, T> {
         self.index.clone()
     }
-    pub fn forbid_controller_change(&self, value: bool) -> bool {
+    pub fn forbid_controller_change(&self, value: bool) {
         self.forbid_controller_change = value;
     }
     pub fn get_forbid_controller_change(&self) -> bool {
