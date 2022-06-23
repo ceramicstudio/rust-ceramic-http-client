@@ -12,11 +12,11 @@ pub enum GenesisUniqueValue {
 #[serde(rename_all = "camelCase")]
 pub struct GenesisHeader {
     controllers: Vec<String>,
-    index: HashMap<String, T>,
+    index: HashMap<String, Value>, //Valuehis is probably not the correct Value type, but it's hopefully flexible enough for now
     #[serde(rename = "forbidControllerChange")]
     forbid_controller_change: bool,
 
-    unique: Option<GenesisUniqueValue>, // Model and ModelInstanceDocument use uint8array instead of string, caip-10 and TileDocument use string
+    unique: Option<GenesisUniqueValue>, // Model and ModelInstanceDocument use uint8array instead of string, caip-10 and ValueileDocument use string
     family: Option<String>,             // deprecated
     model: Option<Vec<u8>>,             // StreamID encoded as byte array js=Uint8Array
     schema: Option<String>,             // deprecated
@@ -26,7 +26,7 @@ pub struct GenesisHeader {
 impl GenesisHeader {
     pub fn new(
         controllers: Vec<String>,
-        index: HashMap<String, T>,
+        index: HashMap<String, Value>,
         forbid_controller_change: bool,
         unique: Option<GenesisUniqueValue>,
         family: Option<String>,
@@ -54,14 +54,14 @@ impl GenesisHeader {
         self.controllers.clone()
     }
 
-    pub fn add_index(&mut self, key: &str, value: T) {
+    pub fn add_index(&mut self, key: &str, value: Value) {
         self.index.insert(String::from(key), value);
     }
 
-    pub fn get_index(&self) -> HashMap<String, T> {
+    pub fn get_index(&self) -> HashMap<String, Value> {
         self.index.clone()
     }
-    pub fn forbid_controller_change(&self, value: bool) {
+    pub fn forbid_controller_change(&mut self, value: bool) {
         self.forbid_controller_change = value;
     }
     pub fn get_forbid_controller_change(&self) -> bool {
