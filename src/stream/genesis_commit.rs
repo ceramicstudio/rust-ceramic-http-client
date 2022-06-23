@@ -2,12 +2,13 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::HashMap;
 
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum GenesisUniqueValue {
     Null,
     String(String),
     Uint8Array(Vec<u8>),
 }
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GenesisHeader {
     controllers: Vec<String>,
@@ -115,7 +116,7 @@ impl Default for GenesisHeader {
     }
 }
 
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GenesisCommit {
     pub header: GenesisHeader,

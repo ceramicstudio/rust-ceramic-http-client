@@ -1,23 +1,9 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-pub enum SignatureStatus {
-    GENSIS,
-    PARTIAL,
-    SIGNED,
-}
-
-pub enum AnchorStatus {
-    NOTREQUESTED,
-    PENDING,
-    PROCESSING,
-    ANCHORED,
-    FAILED,
-}
-
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct CommitHeader {
+pub struct RawCommitHeader {
     pub controllers: Vec<String>,
     pub family: String,
     pub schema: String,
@@ -29,7 +15,7 @@ pub struct CommitHeader {
 #[serde(rename_all = "camelCase")]
 pub struct RawCommit {
     pub id: ContentIdentifier,
-    pub header: CommitHeader,
+    pub header: RawCommitHeader,
     pub data: Value,
     pub prev: ContentIdentifier,
 }
