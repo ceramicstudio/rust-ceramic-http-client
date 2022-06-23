@@ -27,26 +27,6 @@ pub struct CommitHeader {
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct GenesisHeader {
-    pub controllers: Vec<String>,
-    pub family: String,
-    pub schema: String,
-    pub tags: Vec<String>,
-    pub index: Value,
-    pub unique: String,
-    #[serde(rename = "forbidControllerChange")]
-    pub forbid_controller_change: bool,
-}
-
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GenesisCommit {
-    pub header: GenesisHeader,
-    pub data: Value,
-}
-
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
 pub struct RawCommit {
     pub id: ContentIdentifier,
     pub header: CommitHeader,
