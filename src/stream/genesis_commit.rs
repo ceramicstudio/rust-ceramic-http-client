@@ -12,7 +12,7 @@ pub enum GenesisUniqueValue {
 #[serde(rename_all = "camelCase")]
 pub struct GenesisHeader {
     controllers: Vec<String>,
-    index: HashMap<String, Value>, //Valuehis is probably not the correct Value type, but it's hopefully flexible enough for now
+    index: HashMap<String, Value>, //Value is is probably not the correct Value type, but it's hopefully flexible enough for now
     #[serde(rename = "forbidControllerChange")]
     forbid_controller_change: bool,
 

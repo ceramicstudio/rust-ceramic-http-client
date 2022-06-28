@@ -1,4 +1,5 @@
 use crate::ceramic_client::http_requests::CeramicHTTPRequests;
+use crate::stream::genesis_commit::GenesisCommit;
 use async_trait::async_trait;
 use reqwest::{Client, RequestBuilder};
 
@@ -111,6 +112,16 @@ impl CeramicHTTPRequests for CeramicHTTPClient {
         let endpoint: String = format!("{}{}/node/healthcheck", self.api_url, self.api_version);
         let req: RequestBuilder = self.http_client.get(endpoint);
         let res: String = req.send().await?.text().await?;
+        return Result::Ok(res);
+    }
+
+    async fn create_stream_from_genesis(
+        &self,
+        genesis: GenesisCommit,
+    ) -> Result<String, Box<dyn std::error::Error>> {
+        let endpoint: String = format!("{}{}/streams", self.api_url, self.api_version);
+        let req: RequestBuilder = self.http_client.post(endpoint);
+        let res: String = req.json(&genesis).send().await?.text().await?;
         return Result::Ok(res);
     }
 
