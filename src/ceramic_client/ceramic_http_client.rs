@@ -8,7 +8,7 @@ pub struct CeramicHTTPClient {
     api_version: String,
     ceramic_network_url: String,
     http_client: Client,
-    did: Option<String>,
+    did: String,
 }
 
 impl CeramicHTTPClient {
@@ -19,44 +19,44 @@ impl CeramicHTTPClient {
             api_version: String::from(api_version),
             ceramic_network_url: String::from(ceramic_network_url),
             http_client: Client::new(),
-            did: None,
+            did: String::default(),
         }
     }
 
     pub fn set_did(&mut self, did: &str) {
-        self.did = Some(String::from(did));
+        self.did = String::from(did);
     }
 
-    pub fn get_did(&self) -> Option<String> {
-        self.did.clone()
+    pub fn get_did(&self) -> &String {
+        &self.did
     }
 
     pub fn set_api_url(&mut self, api_url: &str) {
         self.api_url = String::from(api_url);
     }
 
-    pub fn get_api_url(&self) -> String {
-        self.api_url.clone()
+    pub fn get_api_url(&self) -> &String {
+        &self.api_url
     }
     pub fn set_api_version(&mut self, api_version: &str) {
         self.api_version = String::from(api_version);
     }
-    pub fn get_api_version(&self) -> String {
-        self.api_version.clone()
+    pub fn get_api_version(&self) -> &String {
+        &self.api_version
     }
     pub fn set_ceramic_network_url(&mut self, ceramic_network_url: &str) {
         self.ceramic_network_url = String::from(ceramic_network_url);
     }
 
-    pub fn get_ceramic_network_url(&self) -> String {
-        self.ceramic_network_url.clone()
+    pub fn get_ceramic_network_url(&self) -> &String {
+        &self.ceramic_network_url
     }
 
     pub fn set_http_client(&mut self, http_client: Client) {
         self.http_client = http_client;
     }
-    pub fn get_http_client(&self) -> Client {
-        self.http_client.clone()
+    pub fn get_http_client(&self) -> &Client {
+        &self.http_client
     }
 }
 
@@ -68,7 +68,7 @@ impl Default for CeramicHTTPClient {
             api_version: String::from("/v0"),
             ceramic_network_url: String::from("https://ceramic-clay.3boxlabs.com"),
             http_client: Client::new(),
-            did: None,
+            did: String::default(),
         }
     }
 }

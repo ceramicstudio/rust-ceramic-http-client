@@ -10,6 +10,8 @@ pub mod stream {
 #[cfg(test)]
 mod tests {
     use crate::ceramic_client::ceramic_http_client::CeramicHTTPClient;
+    use crate::stream::genesis_commit::GenesisCommit;
+    use serde_json::Value;
 
     #[test]
     fn ceramic_client_gets_default_values() {
@@ -49,7 +51,7 @@ mod tests {
         ceramic.set_did("did:3:0x1234567890123456789012345678901234567890");
         assert_eq!(
             ceramic.get_did(),
-            Some("did:3:0x1234567890123456789012345678901234567890".to_string())
+            "did:3:0x1234567890123456789012345678901234567890"
         );
     }
 
@@ -57,7 +59,7 @@ mod tests {
     fn ceramic_client_sets_and_gets_api_url() {
         let mut ceramic: CeramicHTTPClient = CeramicHTTPClient::default();
         ceramic.set_api_url("https://new/api");
-        let api_url = ceramic.get_api_url();
+        let api_url: &String = ceramic.get_api_url();
         assert_eq!(api_url, "https://new/api");
     }
 
@@ -65,7 +67,7 @@ mod tests {
     fn ceramic_client_sets_and_gets_api_version() {
         let mut ceramic: CeramicHTTPClient = CeramicHTTPClient::default();
         ceramic.set_api_version("v1");
-        let api_version = ceramic.get_api_version();
+        let api_version: &String = ceramic.get_api_version();
         assert_eq!(api_version, "v1");
     }
 
@@ -73,7 +75,13 @@ mod tests {
     fn ceramic_client_sets_and_gets_ceramic_network_url() {
         let mut ceramic: CeramicHTTPClient = CeramicHTTPClient::default();
         ceramic.set_ceramic_network_url("https://new-url");
-        let ceramic_network_url = ceramic.get_ceramic_network_url();
+        let ceramic_network_url: &String = ceramic.get_ceramic_network_url();
         assert_eq!(ceramic_network_url, "https://new-url");
+    }
+
+    #[test]
+    fn genesis_commit_is_default() {
+        let genesis_commit: GenesisCommit = GenesisCommit::default();
+        assert_eq!(genesis_commit.get_data(), &Value::Null);
     }
 }
