@@ -48,7 +48,7 @@ mod tests {
     #[test]
     fn ceramic_client_sets_and_gets_did() {
         let mut ceramic: CeramicHTTPClient = CeramicHTTPClient::default();
-        ceramic.set_did("did:3:0x1234567890123456789012345678901234567890");
+        ceramic.did("did:3:0x1234567890123456789012345678901234567890");
         assert_eq!(
             ceramic.get_did(),
             "did:3:0x1234567890123456789012345678901234567890"
@@ -58,7 +58,7 @@ mod tests {
     #[test]
     fn ceramic_client_sets_and_gets_api_url() {
         let mut ceramic: CeramicHTTPClient = CeramicHTTPClient::default();
-        ceramic.set_api_url("https://new/api");
+        ceramic.api_url("https://new/api");
         let api_url: &String = ceramic.get_api_url();
         assert_eq!(api_url, "https://new/api");
     }
@@ -66,7 +66,7 @@ mod tests {
     #[test]
     fn ceramic_client_sets_and_gets_api_version() {
         let mut ceramic: CeramicHTTPClient = CeramicHTTPClient::default();
-        ceramic.set_api_version("v1");
+        ceramic.api_version("v1");
         let api_version: &String = ceramic.get_api_version();
         assert_eq!(api_version, "v1");
     }
@@ -74,7 +74,7 @@ mod tests {
     #[test]
     fn ceramic_client_sets_and_gets_ceramic_network_url() {
         let mut ceramic: CeramicHTTPClient = CeramicHTTPClient::default();
-        ceramic.set_ceramic_network_url("https://new-url");
+        ceramic.ceramic_network_url("https://new-url");
         let ceramic_network_url: &String = ceramic.get_ceramic_network_url();
         assert_eq!(ceramic_network_url, "https://new-url");
     }

@@ -23,7 +23,7 @@ impl CeramicHTTPClient {
         }
     }
 
-    pub fn set_did(&mut self, did: &str) {
+    pub fn did(&mut self, did: &str) {
         self.did = String::from(did);
     }
 
@@ -31,20 +31,20 @@ impl CeramicHTTPClient {
         &self.did
     }
 
-    pub fn set_api_url(&mut self, api_url: &str) {
+    pub fn api_url(&mut self, api_url: &str) {
         self.api_url = String::from(api_url);
     }
 
     pub fn get_api_url(&self) -> &String {
         &self.api_url
     }
-    pub fn set_api_version(&mut self, api_version: &str) {
+    pub fn api_version(&mut self, api_version: &str) {
         self.api_version = String::from(api_version);
     }
     pub fn get_api_version(&self) -> &String {
         &self.api_version
     }
-    pub fn set_ceramic_network_url(&mut self, ceramic_network_url: &str) {
+    pub fn ceramic_network_url(&mut self, ceramic_network_url: &str) {
         self.ceramic_network_url = String::from(ceramic_network_url);
     }
 
@@ -52,7 +52,7 @@ impl CeramicHTTPClient {
         &self.ceramic_network_url
     }
 
-    pub fn set_http_client(&mut self, http_client: Client) {
+    pub fn http_client(&mut self, http_client: Client) {
         self.http_client = http_client;
     }
     pub fn get_http_client(&self) -> &Client {
