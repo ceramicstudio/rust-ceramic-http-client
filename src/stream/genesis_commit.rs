@@ -153,3 +153,13 @@ impl Default for GenesisCommit {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn genesis_commit_is_default() {
+        let genesis_commit: GenesisCommit = GenesisCommit::default();
+        assert_eq!(genesis_commit.get_data(), &Value::Null);
+    }
+}
